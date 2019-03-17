@@ -1,26 +1,45 @@
 package com.ocadohackathon.quizgame.controllers;
 
+import com.ocadohackathon.quizgame.game.QuizGame;
 import com.ocadohackathon.quizgame.models.Controller;
+import com.ocadohackathon.quizgame.models.PlayerOneController;
+import com.ocadohackathon.quizgame.models.PlayerTwoController;
+import com.ocadohackathon.quizgame.models.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("/api/input")
 public class GameInputController {
-    private Controller playerController;
+    private PlayerOneController playerOne;
+    private PlayerTwoController playerTwo;
 
     @Autowired
-    public GameInputController(Controller playerController) {
-        this.playerController = playerController;
+    public GameInputController(PlayerOneController playerOne, PlayerTwoController playerTwo) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
     }
 
-    @PostMapping(consumes = "application/json")
-    public Controller consumeControllerData(@RequestBody Controller controller) {
-        playerController.setxAxis(controller.getxAxis());
-        playerController.setyAxis(controller.getyAxis());
-        playerController.setButton(controller.getButton());
-        return controller;
+    @PostMapping(value = "/playerOne",consumes = "application/json")
+    public void playerOneControllerData(@RequestBody Controller controller) {
+        playerOne.setxAxis(controller.getxAxis());
+        playerOne.setyAxis(controller.getyAxis());
+        playerOne.setButton(controller.getButton());
+        QuizGame.playerToAnswer.setButtonClicked(true);
+    }
+
+    @PostMapping(value = "/playerTwo", consumes = "application/json")
+    public void playerTwoControllerData(@RequestBody Controller controller){
+        playerTwo.setxAxis(controller.getxAxis());
+        playerTwo.setyAxis(controller.getyAxis());
+        playerTwo.setButton(controller.getButton());
+    }
+
+    @GetMapping("/test")
+    public Controller sendQuestion() {
+        return new Controller(515,0,1);
     }
 
 }

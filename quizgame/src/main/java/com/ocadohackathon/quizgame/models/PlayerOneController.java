@@ -1,18 +1,23 @@
 package com.ocadohackathon.quizgame.models;
 
-public class Controller {
+import org.springframework.stereotype.Component;
+
+@Component
+public class PlayerOneController extends Player implements ControllerInput {
     private Integer xAxis;
     private Integer yAxis;
     private Integer button;
+    private Integer score;
 
-    public Controller() {
+    public PlayerOneController() {
 
     }
 
-    public Controller(Integer xAxis, Integer yAxis, Integer button) {
+    public PlayerOneController(Integer xAxis, Integer yAxis, Integer button) {
         this.xAxis = xAxis;
         this.yAxis = yAxis;
         this.button = button;
+        this.score = 10;
     }
 
     public Integer getxAxis() {
@@ -37,5 +42,18 @@ public class Controller {
 
     public void setButton(Integer button) {
         this.button = button;
+    }
+
+    @Override
+    public void takeAction(Integer xAxis, Integer yAxis, Integer button) {
+
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score += score;
     }
 }
