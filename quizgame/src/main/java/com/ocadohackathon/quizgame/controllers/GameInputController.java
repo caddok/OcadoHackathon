@@ -27,7 +27,12 @@ public class GameInputController {
         playerOne.setxAxis(controller.getxAxis());
         playerOne.setyAxis(controller.getyAxis());
         playerOne.setButton(controller.getButton());
-        QuizGame.playerToAnswer.setButtonClicked(true);
+
+        /*if (QuizGame.playerToAnswer.isButtonClicked()) {
+            QuizGame.playerToAnswer.takeAction(controller.getxAxis(),
+                    controller.getyAxis(),controller.getButton());
+        }*/
+            QuizGame.playerToAnswer.setButtonClicked(true);
     }
 
     @PostMapping(value = "/playerTwo", consumes = "application/json")
@@ -35,6 +40,11 @@ public class GameInputController {
         playerTwo.setxAxis(controller.getxAxis());
         playerTwo.setyAxis(controller.getyAxis());
         playerTwo.setButton(controller.getButton());
+        if (QuizGame.playerToAnswer.isButtonClicked()) {
+
+        } else {
+            QuizGame.playerToAnswer.setButtonClicked(true);
+        }
     }
 
     @GetMapping("/test")

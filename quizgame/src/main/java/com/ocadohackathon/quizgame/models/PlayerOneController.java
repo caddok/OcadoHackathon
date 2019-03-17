@@ -1,9 +1,10 @@
 package com.ocadohackathon.quizgame.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerOneController extends Player implements ControllerInput {
+public class PlayerOneController extends Player { //implements ControllerInput {
     private Integer xAxis;
     private Integer yAxis;
     private Integer button;
@@ -13,6 +14,7 @@ public class PlayerOneController extends Player implements ControllerInput {
 
     }
 
+    @Autowired
     public PlayerOneController(Integer xAxis, Integer yAxis, Integer button) {
         this.xAxis = xAxis;
         this.yAxis = yAxis;
@@ -44,11 +46,11 @@ public class PlayerOneController extends Player implements ControllerInput {
         this.button = button;
     }
 
-    @Override
+    /*@Override
     public void takeAction(Integer xAxis, Integer yAxis, Integer button) {
 
     }
-
+*/
     public Integer getScore() {
         return score;
     }

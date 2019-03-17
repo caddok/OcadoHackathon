@@ -1,5 +1,6 @@
 package com.ocadohackathon.quizgame.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,9 +8,12 @@ public class Answer {
     private List<String> answers;
     private Integer indexOfCorrectAnswer;
 
+    public Answer() {
+
+    }
 
     public Answer(List<String> answers, Integer indexOfCorrectAnswer) {
-        this.answers = answers;
+        this.answers = new ArrayList<>();
         this.indexOfCorrectAnswer = indexOfCorrectAnswer;
     }
 

@@ -3,6 +3,7 @@ package com.ocadohackathon.quizgame.game;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
 import com.googlecode.lanterna.gui2.dialogs.ActionListDialogBuilder;
+import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -19,9 +20,12 @@ public class QuizGame {
     private PlayerTwoController playerTwo;
     private InMemoryQuestionAnswerRepository questionAnswerRepository;
     public static Player playerToAnswer;
-    public QuizGame() {
 
-    }
+    /*public QuizGame() {
+        playerOne = new PlayerOneController();
+        playerTwo = new PlayerTwoController();
+        startGame();
+    }*/
 
     @Autowired
     public QuizGame(PlayerOneController playerOne, PlayerTwoController playerTwo, InMemoryQuestionAnswerRepository questionAnswerRepository) {
@@ -62,7 +66,8 @@ public class QuizGame {
         Random random = new Random();
         int questionId = random.nextInt(questionAnswerRepository.
                 getQuestionListHashMap().keySet().size());
-        if (questionAnswerRepository.checkIfQuestionWasAsked(questionId)) {
+        if (questionAnswerRepository.checkIfQuestionWasAsked(questionId)
+        && questionAnswerRepository.getAskedQuestionsIds().size() != 0) {
             chooseQuestion();
         }
         return questionId;
@@ -87,19 +92,24 @@ public class QuizGame {
             e.printStackTrace();
         }
 
+
         // Setup WindowBasedTextGUI for dialogs
         final WindowBasedTextGUI textGUI = new MultiWindowTextGUI(screen);
         final boolean[] correctAnswer = {false};
+        String labelA = "A) " + answer.getAnswers().get(0);
+        String labelB = "B) " + answer.getAnswers().get(1);
+        String labelC = "C) " + answer.getAnswers().get(2);
+        String labelD = "D) " + answer.getAnswers().get(3);
         new ActionListDialogBuilder()
                 .setTitle("Question")
-                .setDescription("Choose the correct answer")
-                .addAction("A) ", () ->
+                .setDescription(question.getQuestionBody())
+                .addAction(labelA, () ->
                         correctAnswer[0] = checkCorrectAnswer(0,answer))
-                .addAction("B) ", () ->
+                .addAction(labelB, () ->
                         correctAnswer[0] = checkCorrectAnswer(1,answer))
-                .addAction("C) ", () ->
+                .addAction(labelC, () ->
                         correctAnswer[0] = checkCorrectAnswer(2,answer))
-                .addAction("D) ", () ->
+                .addAction(labelD, () ->
                         correctAnswer[0] = checkCorrectAnswer(3, answer))
                 .build()
                 .showDialog(textGUI);

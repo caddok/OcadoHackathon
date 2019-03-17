@@ -1,6 +1,8 @@
 package com.ocadohackathon.quizgame.models;
 
-public class Player {
+import com.googlecode.lanterna.input.KeyStroke;
+
+public class Player {//implements ControllerInput {
     private boolean buttonClicked;
 
     public boolean isButtonClicked() {
@@ -10,4 +12,9 @@ public class Player {
     public void setButtonClicked(boolean buttonClicked) {
         this.buttonClicked = buttonClicked;
     }
+
+    /*@Override
+    public String takeAction(Integer xAxis, Integer yAxis, Integer button) {
+
+    }*/
 }
