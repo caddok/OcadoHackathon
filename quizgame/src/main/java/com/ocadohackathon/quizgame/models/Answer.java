@@ -47,8 +47,8 @@ public class Answer {
         return result;
     }
 
-    @Override
-    public String toString() {
+
+    public String visualizeAnswers() {
         StringBuilder builder = new StringBuilder();
         String[] letters = new String[4];
         letters[0] = "A) ";

@@ -43,8 +43,8 @@ public class Question {
         return result;
     }
 
-    @Override
-    public String toString() {
+
+    public String visualizeQuestion() {
         return "Question: "  + questionBody;
     }
 }
