@@ -1,0 +1,42 @@
+import requests
+import serial
+
+API_ENDPOINT_GAME="http://172.26.17.48:8080/"
+
+
+STREAM_PATH = "/dev/ttyUSB1"
+STREAM_PORT = 9600
+
+serial_object = serial.Serial(STREAM_PATH, STREAM_PORT)
+
+def split_input(input_string):
+    controller_dict = {}
+    player_number = input_string[0].strip(' ')
+    x_axis = input_string[1].split(':')[1].strip(' ')
+    y_axis = input_string[2].split(':')[1].strip(' ')
+    button = input_string[3].split(':')[1].strip(' \r\n')
+    controller_dict['xAxis'] = int(x_axis)
+    controller_dict['yAxis'] = int(y_axis)
+    controller_dict['button'] = int(button)
+    return controller_dict
+
+
+while True:
+    data = serial_object.readline()
+    data = data.decode("utf-8").split('|')
+    if len(data) == 4:
+        if int(data[0]) == 1:
+            controller_dict = split_input(data)
+            if len(controller_dict) == 3:
+                controller_request = requests.post(url= API_ENDPOINT_GAME+"playerOne",
+                                           json= controller_dict)
+                controller_response = controller_request.text 
+        else:
+            controller_dict = split_input(data)
+            if len(controller_dict) == 3:
+                controller_request = requests.post(url= API_ENDPOINT_GAME+"playerTwo",
+                                           json= controller_dict)
+                controller_response = controller_request.text
+        controller_dict = {}
+    
+
