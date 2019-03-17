@@ -1,9 +1,16 @@
 package com.ocadohackathon.quizgame.models;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Controller {
     private Integer xAxis;
     private Integer yAxis;
     private Integer button;
+
+    public Controller() {
+
+    }
 
     public Controller(Integer xAxis, Integer yAxis, Integer button) {
         this.xAxis = xAxis;
